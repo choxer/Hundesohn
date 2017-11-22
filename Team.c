@@ -60,13 +60,8 @@ void addPlayer(void)
 
     //Spielername
     do{} while( !getText("Spielername",30,0,&((Teams+TeamCounter)->Player->Playern)) );
-
     //Birthday
-    do{
-        printf("Geburtsdatum: ");
-        scanf("%s", strdate);
-        clearBuffer();
-    } while( !getDate(strdate) );
+    do{} while( !getDate("Geburtsdatum") );
     //Trikonummer
     do{} while ( !getNumber("Trikotnummer",0, &((Teams+TeamCounter)->Player->Trikotn),1,99) );
     //Goals

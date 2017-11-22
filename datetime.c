@@ -70,14 +70,19 @@ int isdatevalid(TDate today)
 
 //Übergibt einer Tplayer datei ein geburtsdatum aus einem eingegebenen String
 
-int getDate(char strdate[])
+int getDate(char eingabeAufruf[])
 {
     //printf("TEST!!999!!\n");
-
+    char strdate[25];
     char *pdate   =  &(*strdate);
     char *pday    =  &(*strdate);
     char *pmonth  =  NULL;
     char *pyear   =  NULL;
+
+
+    printf("%s: ", eingabeAufruf);
+    scanf("%s", strdate);
+    clearBuffer();
 
     TDate today;
 
@@ -134,7 +139,7 @@ int getDate(char strdate[])
     today.Month = (atoi(pmonth));
     today.Year  = (atoi(pyear));
 
-    printf("%02i.%02i.%04i\n", today.Day, today.Month, today.Year);
+    printf("Ihre Eingabe: %02i.%02i.%04i\n", today.Day, today.Month, today.Year);
 
     if(isdatevalid(today)==1)           //testet ob valid ist und übergibt an
     {                                   // unsere struct

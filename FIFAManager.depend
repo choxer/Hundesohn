@@ -145,3 +145,58 @@
 	<string.h>
 	"datastruct.h"
 
+1511354935 source:c:\users\besitzer\documents\uni\info2\fifamanager\datetime.c
+	"datetime.h"
+
+1511354919 c:\users\besitzer\documents\uni\info2\fifamanager\datetime.h
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"datastruct.h"
+
+1510891982 c:\users\besitzer\documents\uni\info2\fifamanager\datastruct.h
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+
+1510891982 source:c:\users\besitzer\documents\uni\info2\fifamanager\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"datastruct.h"
+	"Team.h"
+	"tools.h"
+	"menu.h"
+	"datetime.h"
+
+1510891982 c:\users\besitzer\documents\uni\info2\fifamanager\team.h
+	"datastruct.h"
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+
+1510891982 c:\users\besitzer\documents\uni\info2\fifamanager\tools.h
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+
+1510891982 c:\users\besitzer\documents\uni\info2\fifamanager\menu.h
+	"datastruct.h"
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+
+1510891982 source:c:\users\besitzer\documents\uni\info2\fifamanager\menu.c
+	"menu.h"
+
+1511354769 source:c:\users\besitzer\documents\uni\info2\fifamanager\team.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"Team.h"
+	"tools.h"
+	"datetime.h"
+
+1511354298 source:c:\users\besitzer\documents\uni\info2\fifamanager\tools.c
+	"tools.h"
+

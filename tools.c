@@ -16,7 +16,7 @@ int askYesorNo(char strQuestion[])
         printf("%s\n",strQuestion);
 
         scanf("%c",&Input);
-
+        clearBuffer();
 
 
         if(Input=='y'||Input=='Y'||Input=='j'||Input=='J')
@@ -68,7 +68,7 @@ int getText(char eingabe[],int maxZeichen,int optional,char **PStruct)
     //Einlesen der eingabe und speichern als zeiger auf chars
     char *pchar = NULL;
     pchar = malloc(sizeof(char));
-    scanf("%s",pchar);
+    scanf("%[^\n]",pchar);
     clearBuffer();
 
     //auf Inhalt testen und optionalität
