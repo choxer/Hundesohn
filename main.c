@@ -17,96 +17,80 @@ int main()
 {
 
 
-int anzmenu=8;                          //ANzahl der menus
+    int anzmenu=8;                          //ANzahl der menus
 
-TMTitel ArrMTitel[anzmenu];         //Array von struct TMenuTitel
+    TMTitel ArrMTitel[anzmenu];         //Array von struct TMenuTitel
                                     //in struct char MTitel[]
 
- //füllen der Titel
- strcpy(ArrMTitel[0].MTitel,"Neue Mannschaft anlegen");
- strcpy(ArrMTitel[1].MTitel,"Spieler hinzufuegen");
- strcpy(ArrMTitel[2].MTitel,"Spieler loeschen");
- strcpy(ArrMTitel[3].MTitel,"Mannschaft loeschen");
- strcpy(ArrMTitel[4].MTitel,"Suchen");
- strcpy(ArrMTitel[5].MTitel,"Sortieren");
- strcpy(ArrMTitel[6].MTitel,"Auflisten");
- strcpy(ArrMTitel[7].MTitel,"Programm beenden");
+     //füllen der Titel
+     strcpy(ArrMTitel[0].MTitel,"Neue Mannschaft anlegen");
+     strcpy(ArrMTitel[1].MTitel,"Spieler hinzufuegen");
+     strcpy(ArrMTitel[2].MTitel,"Spieler loeschen");
+     strcpy(ArrMTitel[3].MTitel,"Mannschaft loeschen");
+     strcpy(ArrMTitel[4].MTitel,"Suchen");
+     strcpy(ArrMTitel[5].MTitel,"Sortieren");
+     strcpy(ArrMTitel[6].MTitel,"Auflisten");
+     strcpy(ArrMTitel[7].MTitel,"Programm beenden");
 
 
-char Menutitel[]={"Mannschaften-Verwaltung"};
+    char Menutitel[]={"Mannschaften-Verwaltung"};
 
 
-//-----------------Aufruf von Menu funktion--------------------------------//
+    //-----------------Aufruf von Menu funktion--------------------------------//
 
-int ok=0;
-do{
-    int eingabe = getmenu((&Menutitel[0]),ArrMTitel,anzmenu);
+    int ok=0;
+    do{
+        int eingabe = getmenu((&Menutitel[0]),ArrMTitel,anzmenu);
 
-    switch(eingabe) {
-        case 0:
+        switch(eingabe) {
+            case 0:
 
-                createTeam();
-                WaitForEnter(); break;
+                    createTeam();
+                    WaitForEnter(); break;
 
-        case 1:
+            case 1:
 
-                do
-                {
-
-
-                TPlayer *newPlayer;
-                newPlayer = malloc(sizeof(TPlayer));
-
-                if ( newPlayer == NULL )
-                {
-                    printf("ERROR:SPEICHERRESERVIERUNG NEWPLAYER");
-                }else
-                {
-                    addPlayer();
-                }
-
-                free(newPlayer);
-                }while( askYesorNo("Wollen sie noch einen Spieler anlegen?") );
+                    do
+                    {
 
 
+                    TPlayer *newPlayer;
+                    newPlayer = malloc(sizeof(TPlayer));
 
-                break;
+                    if ( newPlayer == NULL )
+                    {
+                        printf("ERROR:SPEICHERRESERVIERUNG NEWPLAYER");
+                    }else
+                    {
+                        addPlayer();
+                    }
 
-        case 2: deletePlayer();
-                WaitForEnter(); break;
-
-        case 3: deleteTeam();
-                WaitForEnter(); break;
-
-        case 4: searchPlayer();
-                WaitForEnter(); break;
-
-        case 5: sortTeams();
-                WaitForEnter(); break;
-
-        case 6: listTeams();
-                WaitForEnter(); break;
-
-        case 7: endprog();ok=1;   break;
-
-        default:printf("ERROR:Menuauswahl\n") ; break;
-    }
+                    free(newPlayer);
+                    }while( askYesorNo("Wollen sie noch einen Spieler anlegen?") );
 
 
 
+                    break;
 
+            case 2: deletePlayer();
+                    WaitForEnter(); break;
 
-}while(ok==0);
+            case 3: deleteTeam();
+                    WaitForEnter(); break;
 
+            case 4: searchPlayer();
+                    WaitForEnter(); break;
 
+            case 5: sortTeams();
+                    WaitForEnter(); break;
 
+            case 6: listTeams();
+                    WaitForEnter(); break;
 
+            case 7: endprog();ok=1;   break;
 
-
-
-
-
-
-
-return 1;
+            default:printf("ERROR:Menuauswahl\n") ; break;
+            }
+    }while(!ok);
+    return 0;
 }

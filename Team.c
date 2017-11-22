@@ -31,27 +31,45 @@ void createTeam(void){
     //printf("%i",newTeam->AnzPlayer);
 
     //Teamname
-    getText("Teamname: ", 25, 0, &((Teams+TeamCounter)->Teamn) );
+    do{} while( !getText("Teamname", 25, 0, &(Teams[TeamCounter].Teamn) ) );
+
     //printf("%s", newTeam->Teamn);
     //trainername
-    getText("Trainername: ", 25, 1, &((Teams+TeamCounter)->Coach) );
+    do{} while( !getText("Trainername", 25, 1, &(Teams[TeamCounter].Coach) ) );
+
     //anzahl spieler
-    (Teams+TeamCounter)->AnzPlayer = 0;
+    (Teams[TeamCounter]).AnzPlayer = 0;
 
+    //TeamCounter++;
 
-    //TTeam Team+TeamCounter;
+    printf("Bitte Eingaben mit Enter bestaetigen!\n");
+    WaitForEnter();
+    do
+    {
+        TPlayer *newPlayer;
+        newPlayer = malloc(sizeof(TPlayer));
 
+        if ( newPlayer == NULL )
+        {
+            printf("ERROR:SPEICHERRESERVIERUNG NEWPLAYER");
+        }
+        else
+        {
+            addPlayer();
+            Teams[TeamCounter].AnzPlayer++;
+        }
+        free(newPlayer);
+    } while( askYesorNo("Wollen sie noch einen Spieler anlegen?") );
 }
 
-void deleteTeam(void){
-
+void deleteTeam(void)
+{
     printf("deleteTeam\n");
-
 }
 
 void addPlayer(void)
 {
-    char strdate[20];
+//    int *AnzPlay = (TeamCounter[TeamCounter]).AnzPlayer;
 
     clearScreen();
     //MenuTitel
@@ -59,18 +77,16 @@ void addPlayer(void)
     printline('-',strlen("Erfassung eines neuen Spielers"));
 
     //Spielername
-    do{} while( !getText("Spielername",30,0,&((Teams+TeamCounter)->Player->Playern)) );
+    do{} while( !getText("Spielername",30,0,&(Teams[TeamCounter].Player[(Teams[TeamCounter]).AnzPlayer].Playern)) );
 
     //Birthday
-    do{
-        printf("Geburtsdatum: ");
-        scanf("%s", strdate);
-        clearBuffer();
-    } while( !getDate(strdate) );
+    do{} while( !getDate("Geburtsdatum") );
     //Trikonummer
-    do{} while ( !getNumber("Trikotnummer",0, &((Teams+TeamCounter)->Player->Trikotn),1,99) );
+    do{} while ( !getNumber("Trikotnummer",0, &(Teams[TeamCounter].Player[(Teams[TeamCounter]).AnzPlayer].Trikotn),1,99) );
     //Goals
 
+    //(Teams[TeamCounter]).AnzPlayer++;
+    printf("Bitte Eingaben mit Enter bestaetigen!\n");
 }
 
 void deletePlayer(void){
@@ -91,10 +107,40 @@ void sortTeams(void){
 
 }
 
-void listTeams(void){
+void listTeams(void)
+{
+    int i = 1;
 
-    printf("listTeams\n");
+    clearScreen();
 
+    for(i=1; i<=TeamCounter; i++)
+    {
+        listOneTeam(i);
+    }
+}
+
+void listOneTeam(int i)
+{
+    int j = 1;
+    int k = 1;
+
+    printf("Name            : %s\n", Teams[i].Teamn);
+    printf("Trainer         : %s\n", Teams[i].Coach);
+    printf("Anzahl Spieler  : %i\n", Teams[i].AnzPlayer);
+    printf("Spieler:\n");
+
+    for(j=1; j<=Teams[i].AnzPlayer; j++)
+    {
+        listOnePlayer(k, i);
+        k++;
+    }
+}
+
+void listOnePlayer(int k, int i)
+{
+    printf("%i. %s (%i; * ", k, Teams[i].Player[k].Playern, Teams[i].Player[k].Trikotn);
+    //printDate( *(Teams[i].Player[k]).Birthday);
+    printf(")\n");
 }
 
 void endprog(void){

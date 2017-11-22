@@ -32,7 +32,7 @@ int OK=0;
 
 
         if(eingabe>anzmenu||eingabe<0){
-                printf("Ihre eingabe ist nicht Gueltig\n ");
+                printf("Ihre Eingabe ist nicht Gueltig!\n");
                 WaitForEnter();
         }
         else{

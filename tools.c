@@ -16,7 +16,7 @@ int askYesorNo(char strQuestion[])
         printf("%s\n",strQuestion);
 
         scanf("%c",&Input);
-
+        clearBuffer();
 
 
         if(Input=='y'||Input=='Y'||Input=='j'||Input=='J')
@@ -32,7 +32,11 @@ int askYesorNo(char strQuestion[])
 
 void clearBuffer(void)
 {
-    while ( getchar() != '\n' );
+    char dummy;
+    do
+    {
+        scanf("%c", &dummy);
+    } while(dummy != '\n');
 }
 
 void printline(char text,int anz){
@@ -50,33 +54,53 @@ void printline(char text,int anz){
 
 void WaitForEnter(void){
 
-    clearBuffer();
-    printf("Druecken sie Enter um fortzufahren\n");
+    //clearBuffer();
+    printf("Druecken sie Enter um fortzufahren..\n");
     char enter;
-    scanf("%c",&enter);
+    scanf("%[^\n]",&enter);
     clearBuffer();
 
 
 
 }
 
+void chomp(char *str)       // KOPIERTE FUNKTION !!!!
+{
+   size_t p=strlen(str);
+   /* '\n' mit '\0' überschreiben */
+   str[p-1]='\0';
+}
+
 int getText(char eingabe[],int maxZeichen,int optional,char **PStruct)
 {
+    int len;
+    int i = 0;
     //Benutzer die gewünschte eingabe mitteilen
     printf("%s: ",eingabe);
 
     //Einlesen der eingabe und speichern als zeiger auf chars
     char *pchar = NULL;
-    pchar = malloc(sizeof(char));
-    scanf("%s",pchar);
-    clearBuffer();
+    pchar = calloc(maxZeichen, sizeof(char));
+    //scanf("%s",pchar);
+    fgets(pchar, maxZeichen, stdin);
+    //chomp(pchar);
+
+
+    //printf("%s\n", pchar);
+    //printf("%s", *pchar);
 
     //auf Inhalt testen und optionalität
     if(!optional)
-    {                     //optional=1 für optional
-        if( !(*pchar) )                //optional=0 für nicht optional
+    {                     //optional=1 für optional //optional=0 für nicht optional
+        //printf("NICHT OPTIONAL!\n");
+        if( !(*pchar) )
         {
-            printf("Bitte geben Sie was fur %s ein\n",eingabe);
+            printf("Nicht korrekte Eingabe in Kategorie: %s \n",eingabe);
+            return 0;
+        }
+        else if( *pchar == '\n')
+        {
+            printf("Nicht korrekte Eingabe in Kategorie: %s \n",eingabe);
             return 0;
         }
     }
@@ -96,14 +120,16 @@ int getText(char eingabe[],int maxZeichen,int optional,char **PStruct)
 
 
     //Pstruct adresse des angelegten speichers überegeben
-    *PStruct = pcharReal;
+    *PStruct = pchar;
 
     //Testen
-    printf("Ihre Eingabe: %s\n",*PStruct);
+    //if(pcharReal != '\n')
+       // printf("Ihre Eingabe: %s\n",*PStruct);
 
 
     //freigeben des speichers für pchar
     free(pchar);
+    free(pcharReal);
 
     return 1;
 }
@@ -112,17 +138,16 @@ int getNumber(char eingabeAufruf[],int optional,int *PStruct, int von, int bis)
 {
     //eingabe
     printf("%s: ", eingabeAufruf);
-
     //einlesen
     int eingabe = 0;
-    scanf("%i", &eingabe);
+    scanf("%i[^\n]", &eingabe);
     clearBuffer();
     //auf Inhalt testen und optionalität
     if( (!optional)&&(!eingabe) )
     {                     //optional=1 für optional
         do                //optional=0 für nicht optional
         {
-            printf("Bitte geben Sie was fur %s ein\n", eingabeAufruf);
+            printf("Nicht korrekte Eingabe in Kategorie: %s \n", eingabeAufruf);
             scanf("%i", &eingabe);
             clearBuffer();
         } while( !(eingabe) );
@@ -142,7 +167,7 @@ int getNumber(char eingabeAufruf[],int optional,int *PStruct, int von, int bis)
     *PStruct = eingabe;
 
     //Testen
-    printf("Ihre Eingabe: %i\n", *PStruct);
+    //printf("Ihre Eingabe: %i\n", *PStruct);
 
     return 1;
 
