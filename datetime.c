@@ -70,10 +70,11 @@ int isdatevalid(TDate today)
 
 //Übergibt einer Tplayer datei ein geburtsdatum aus einem eingegebenen String
 
-int getDate(char eingabeAufruf[])
+int getDate(char eingabeAufruf[], int optional)
 {
     //printf("TEST!!999!!\n");
     char strdate[25];
+    char *eingabestr = &(strdate[0]);
     char *pdate   =  &(*strdate);
     char *pday    =  &(*strdate);
     char *pmonth  =  NULL;
@@ -81,9 +82,26 @@ int getDate(char eingabeAufruf[])
 
 
     printf("%s: ", eingabeAufruf);
-    scanf("%s", strdate);
-    clearBuffer();
-
+    //scanf("%s", strdate);
+    fgets(eingabestr, 25, stdin);
+    //clearBuffer();
+    //printf("%s\n", strdate);
+    if(!optional)
+    {                     //optional=1 für optional //optional=0 für nicht optional
+        //printf("NICHT OPTIONAL!\n");
+        if( !(strdate) )
+        {
+            printf("Nicht korrekte Eingabe in Kategorie: %s \n",eingabeAufruf);
+            return 0;
+        }
+        else if( strdate == '\n')
+        {
+            printf("Nicht korrekte Eingabe in Kategorie: %s \n",eingabeAufruf);
+            return 0;
+        }
+    }
+    if(optional)
+        return 1;
     TDate today;
 
     //int count=0;
