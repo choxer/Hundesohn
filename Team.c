@@ -31,8 +31,16 @@ void createTeam(void){
     //printf("%i",newTeam->AnzPlayer);
 
     //Teamname
-    do{} while( getText("Teamname", 25, &(Teams[TeamCounter].Teamn), 0 ) );
+    //do {} while( !getText("Teamname", 25, &(Teams[TeamCounter].Teamn), 0 )) ;
 
+    //char *Eingabe;
+    //if(getText("Name", 30, &Eingabe, 0))
+    //{
+     //   printf("%s\n", Eingabe);
+    //}
+    //free(Eingabe);
+
+    getText("Teamname", 30, &((Teams+TeamCounter)->Teamn), 0 );
     //printf("Teamnametest: %i\n", *(Teams+TeamCounter) );        // schmiert ab !!!!!
     //printf("Teamnametest: %i\n", Teams+TeamCounter);
     //printf("Teamnametest: %i\n", *newTeam );
@@ -40,10 +48,10 @@ void createTeam(void){
     //printf("%s", newTeam->Teamn);
     //printf("Teamname Test: %s\n", (Teams[1].Teamn));
     printf("Teamname Test: %s\n", (Teams[TeamCounter].Teamn));
-    printf("Teamname Test: %s\n", &(Teams[TeamCounter].Teamn));     // schmiert ab
+    //printf("Teamname Test: %s\n", &(Teams[TeamCounter].Teamn));     // schmiert ab
 
     //trainername
-    do{} while( !getText("Trainername", 25, &(Teams[TeamCounter].Coach) , 1 ));
+    do{} while( !getText("Trainername", 25, &((Teams+TeamCounter)->Coach) , 1 ));
 
     //printf("Teamname Test: %s\n", (Teams[1].Coach));
     //printf("Teamname Test: %s\n", (Teams[TeamCounter].Coach));
@@ -83,7 +91,12 @@ void deleteTeam(void)
 
 void addPlayer(void)
 {
-//    int *AnzPlay = (TeamCounter[TeamCounter]).AnzPlayer;
+
+    TTeam *aktTeam;
+    aktTeam = (Teams+TeamCounter);
+    int AnzPlayer = aktTeam->AnzPlayer;
+    char **aktTeamNam = &((aktTeam->Player+(AnzPlayer))->Playern);
+    int *aktTeamNum = &((aktTeam->Player+(AnzPlayer))->Trikotn);
 
     clearScreen();
     //MenuTitel
@@ -91,12 +104,12 @@ void addPlayer(void)
     printline('-',strlen("Erfassung eines neuen Spielers"));
 
     //Spielername
-    do{} while( !getText("Spielername",30,&(Teams[TeamCounter].Player[(Teams[TeamCounter]).AnzPlayer].Playern), 0) );
+    do{} while( !getText("Spielername",30, aktTeamNam, 0 )) ;
 
     //Birthday
     do{} while( !getDate("Geburtsdatum", 1) );
     //Trikonummer
-    do{} while ( !getNumber("Trikotnummer",0, &(Teams[TeamCounter].Player[(Teams[TeamCounter]).AnzPlayer].Trikotn),1,99) );
+    do{} while ( !getNumber("Trikotnummer",0, aktTeamNum,1,99) );
     //Goals
 
     //(Teams[TeamCounter]).AnzPlayer++;
@@ -136,7 +149,7 @@ void listTeams(void)
 
 void listOneTeam(int i)
 {
-    int j = 1;
+    int j = 0;
     int k = 1;
 
     printf("Name            : %s\n", Teams[i].Teamn);
@@ -144,7 +157,7 @@ void listOneTeam(int i)
     printf("Anzahl Spieler  : %i\n", Teams[i].AnzPlayer);
     printf("Spieler:\n");
 
-    for(j=1; j<=Teams[i].AnzPlayer; j++)
+    for(j=0; j<Teams[i].AnzPlayer; j++)
     {
         listOnePlayer(k, i);
         k++;
@@ -153,8 +166,10 @@ void listOneTeam(int i)
 
 void listOnePlayer(int k, int i)
 {
-    printf("%i. %s (%i; * ", k, Teams[i].Player[k].Playern, Teams[i].Player[k].Trikotn);
-    //printDate( *(Teams[i].Player[k]).Birthday);
+    TDate *DATUM;
+    DATUM = (Teams[i].Player[k-1].Birthday );
+    printf("%i. %s (%i; * ", k, Teams[i].Player[k-1].Playern, Teams[i].Player[k-1].Trikotn);
+    printDate(*DATUM);
     printf(")\n");
 }
 

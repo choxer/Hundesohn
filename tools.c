@@ -209,7 +209,7 @@ int getText(char *Prompt, int MaxLen, char **Text, int allowEmpty)
         do
         {
             printf("%s: ", Prompt);
-            scanErg = scanf((Format, Input));
+            scanErg = scanf(Format, Input);
             clearBuffer();
             len = strlen(Input);
 
@@ -239,4 +239,8 @@ int getText(char *Prompt, int MaxLen, char **Text, int allowEmpty)
         free(Input);
         return 1;
     }
+    else
+        printf("FEHLER!");
+        return 0;
+
 }

@@ -25,12 +25,15 @@ int isleapyear(TDate today)
 
 //Überprüft ob Datum gueltig ist
 
-int isdatevalid(TDate today)
+int isdatevalid(TDate today, int optional)
 {
     int leapyear = isleapyear(today);
     int month=today.Month;
     int day=today.Day;
     int year=today.Year;
+
+    if( (optional) && (day==0) && (month==0) && (year==0) )
+        return 1;
 
     if(day>31||day==0)
     {   return 0;                   //Tage über 31 und nicht 0.
@@ -69,7 +72,6 @@ int isdatevalid(TDate today)
 
 
 //Übergibt einer Tplayer datei ein geburtsdatum aus einem eingegebenen String
-
 int getDate(char eingabeAufruf[], int optional)
 {
     //printf("TEST!!999!!\n");
@@ -89,19 +91,18 @@ int getDate(char eingabeAufruf[], int optional)
     if(!optional)
     {                     //optional=1 für optional //optional=0 für nicht optional
         //printf("NICHT OPTIONAL!\n");
-        if( !(strdate) )
+        if( !(*strdate) )
         {
             printf("Nicht korrekte Eingabe in Kategorie: %s \n",eingabeAufruf);
             return 0;
         }
-        else if( strdate == '\n')
+        else if( *strdate == '\n')
         {
             printf("Nicht korrekte Eingabe in Kategorie: %s \n",eingabeAufruf);
             return 0;
         }
     }
-    if(optional)
-        return 1;
+
     TDate today;
 
     //int count=0;
@@ -110,70 +111,75 @@ int getDate(char eingabeAufruf[], int optional)
 
        // printf("TEST!!!!\n");
 
-    while(*(strdate+i))
-    {
-        if( (*(strdate+i) == '.') && (*(strdate+i+1) != '.') )
+
+        while(*(strdate+i))
         {
-            if(count == 1)
+            if( (*(strdate+i) == '.') && (*(strdate+i+1) != '.') )
             {
-                pyear = &(*(strdate+i+1));
+                if(count == 1)
+                {
+                    pyear = &(*(strdate+i+1));
+                }
+                if(count == 0)
+                {
+                    pmonth = &(*(strdate+i+1));
+                    //printf("TEST666");
+                    count++;
+                }
             }
-            if(count == 0)
+            i++;
+        }
+    /*
+        for(i=0;*(pdate+i);i++) //Shleife über Array
+        {
+
+            if((*(pdate+i)=='.'||*(pdate+i)==':')&&x==0)  //sucht nach trennzeichen
             {
-                pmonth = &(*(strdate+i+1));
-                //printf("TEST666");
-                count++;
+
+
+             pmonth=&strdate[i+1];          //übergibt pointer die adresse vom
+                                            //element nach dem trennzeichen
+             today.Month=(atoi(pmonth));    //month wird wert int  übergeben
+
+             x=1;                       // x auf eins um in das jahers if zu kommen
             }
-        }
-        i++;
-    }
-/*
-    for(i=0;*(pdate+i);i++) //Shleife über Array
-    {
 
-        if((*(pdate+i)=='.'||*(pdate+i)==':')&&x==0)  //sucht nach trennzeichen
-        {
+            if((*(pdate+i)=='.'||*(pdate+i)==':')&&x==1)
+            {
+             pyear=&strdate[i+1];
+             today.Year=(atoi(pyear));
 
-
-         pmonth=&strdate[i+1];          //übergibt pointer die adresse vom
-                                        //element nach dem trennzeichen
-         today.Month=(atoi(pmonth));    //month wird wert int  übergeben
-
-         x=1;                       // x auf eins um in das jahers if zu kommen
-        }
-
-        if((*(pdate+i)=='.'||*(pdate+i)==':')&&x==1)
-        {
-         pyear=&strdate[i+1];
-         today.Year=(atoi(pyear));
+            }
 
         }
+    */
+        //printf("TEST!\n");
 
-    }
-*/
-    //printf("TEST!\n");
+        today.Day   = (atoi(pday));
+        today.Month = (atoi(pmonth));
+        today.Year  = (atoi(pyear));
 
-    today.Day   = (atoi(pday));
-    today.Month = (atoi(pmonth));
-    today.Year  = (atoi(pyear));
+        //printf("Ihre Eingabe: %02i.%02i.%04i\n", today.Day, today.Month, today.Year);
+        //printDate(today);
 
-    //printf("Ihre Eingabe: %02i.%02i.%04i\n", today.Day, today.Month, today.Year);
-    //printDate(today);
-
-    if(isdatevalid(today)==1)           //testet ob valid ist und übergibt an
+    if(isdatevalid(today, optional)==1)           //testet ob valid ist und übergibt an
     {                                   // unsere struct
-        TDate *birthday;
+            TDate *birthday;
 
-        birthday = malloc(sizeof(TDate));
+            birthday = malloc(sizeof(TDate));
+            int k = (Teams+TeamCounter)->AnzPlayer;
 
-        (Teams+TeamCounter)->Player->Birthday   = birthday;
+            (Teams+TeamCounter)->Player[k].Birthday   = birthday;
 
-        (Teams+TeamCounter)->Player->Birthday->Day   = (atoi(pday));
-        (Teams+TeamCounter)->Player->Birthday->Month = (atoi(pmonth));
-        (Teams+TeamCounter)->Player->Birthday->Year  = (atoi(pyear));
-        return 1;
+            (Teams+TeamCounter)->Player[k].Birthday->Day   = (atoi(pday));
+            (Teams+TeamCounter)->Player[k].Birthday->Month = (atoi(pmonth));
+            (Teams+TeamCounter)->Player[k].Birthday->Year  = (atoi(pyear));
+            //free(birthday);
+            return 1;
 
     }
+
+
     else
     {
         printDate(today);
@@ -191,6 +197,8 @@ void printDate(TDate Date)
    int  iday    = Date.Day;
    int  imonth  = Date.Month;
    int  iyear   = Date.Year;
-
-    printf("%02i.%02i.%04i\n",iday,imonth,iyear);
+    if(!((iday==0)&&(imonth==0)&&(iyear==0) ))
+        printf("%02i.%02i.%04i",iday,imonth,iyear);
+    else
+        printf("          ");
 }

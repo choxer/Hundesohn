@@ -7,7 +7,7 @@
 #include "datastruct.h"
 
 int isleapyear(TDate);
-int isdatevalid(TDate);
+int isdatevalid(TDate, int );
 int getDate(char [], int );
 void printDate(TDate);
 
