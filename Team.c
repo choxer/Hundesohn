@@ -31,7 +31,7 @@ void createTeam(void){
     //printf("%i",newTeam->AnzPlayer);
 
     //Teamname
-    do{} while( !getText("Teamname", 25, 0, &(Teams[TeamCounter].Teamn) ) );
+    do{} while( getText("Teamname", 25, &(Teams[TeamCounter].Teamn), 0 ) );
 
     //printf("Teamnametest: %i\n", *(Teams+TeamCounter) );        // schmiert ab !!!!!
     //printf("Teamnametest: %i\n", Teams+TeamCounter);
@@ -39,11 +39,11 @@ void createTeam(void){
     //printf("Teamnametest: %i\n", newTeam );
     //printf("%s", newTeam->Teamn);
     //printf("Teamname Test: %s\n", (Teams[1].Teamn));
-    //printf("Teamname Test: %s\n", (Teams[TeamCounter].Teamn));
-    //printf("Teamname Test: %s\n", *(Teams[TeamCounter].Teamn));     // schmiert ab
+    printf("Teamname Test: %s\n", (Teams[TeamCounter].Teamn));
+    printf("Teamname Test: %s\n", &(Teams[TeamCounter].Teamn));     // schmiert ab
 
     //trainername
-    do{} while( !getText("Trainername", 25, 1, &(Teams[TeamCounter].Coach) ) );
+    do{} while( !getText("Trainername", 25, &(Teams[TeamCounter].Coach) , 1 ));
 
     //printf("Teamname Test: %s\n", (Teams[1].Coach));
     //printf("Teamname Test: %s\n", (Teams[TeamCounter].Coach));
@@ -65,7 +65,7 @@ void createTeam(void){
         {
             printf("ERROR:SPEICHERRESERVIERUNG NEWPLAYER");
         }
-        else
+        else if (newPlayer)
         {
             addPlayer();
             Teams[TeamCounter].AnzPlayer++;
@@ -91,7 +91,7 @@ void addPlayer(void)
     printline('-',strlen("Erfassung eines neuen Spielers"));
 
     //Spielername
-    do{} while( !getText("Spielername",30,0,&(Teams[TeamCounter].Player[(Teams[TeamCounter]).AnzPlayer].Playern)) );
+    do{} while( !getText("Spielername",30,&(Teams[TeamCounter].Player[(Teams[TeamCounter]).AnzPlayer].Playern), 0) );
 
     //Birthday
     do{} while( !getDate("Geburtsdatum", 1) );

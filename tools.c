@@ -70,7 +70,7 @@ void chomp(char *str)       // KOPIERTE FUNKTION !!!!
    /* '\n' mit '\0' überschreiben */
    str[p-1]='\0';
 }
-
+/*
 int getText(char eingabe[],int maxZeichen,int optional,char **PStruct)
 {
     int len;
@@ -80,11 +80,13 @@ int getText(char eingabe[],int maxZeichen,int optional,char **PStruct)
 
     //Einlesen der eingabe und speichern als zeiger auf chars
     char *pchar = NULL;
-    pchar = calloc(maxZeichen, sizeof(char));
+    *pchar = calloc(maxZeichen, (sizeof(char)) );
     //scanf("%s",pchar);
-    fgets(pchar, maxZeichen, stdin);
+    if(pchar)
+        fgets(pchar, maxZeichen, stdin);
     //chomp(pchar);
-
+    else
+        printf("FEHLER\n");
 
     //printf("%s\n", pchar);
     //printf("%s", *pchar);
@@ -113,14 +115,19 @@ int getText(char eingabe[],int maxZeichen,int optional,char **PStruct)
 
     //anlegen des speichers
     char *pcharReal;
-    pcharReal = calloc(strlen(pchar) , sizeof(char));
+    *pcharReal = calloc(strlen(pchar) , sizeof(char));
 
+    if(pcharReal)
+    {
     //kopieren der eingabe
-    strcpy(pcharReal,pchar);
-
+        strcpy(pcharReal,pchar);
+        *PStruct = pchar;
+    }
+    else
+        printf("Hallo!!!!!!FEHLER\n");
 
     //Pstruct adresse des angelegten speichers überegeben
-    *PStruct = pchar;
+
 
     //Testen
     //if(pcharReal != '\n')
@@ -133,6 +140,8 @@ int getText(char eingabe[],int maxZeichen,int optional,char **PStruct)
 
     return 1;
 }
+*/
+
 
 int getNumber(char eingabeAufruf[],int optional,int *PStruct, int von, int bis)
 {
@@ -171,4 +180,63 @@ int getNumber(char eingabeAufruf[],int optional,int *PStruct, int von, int bis)
 
     return 1;
 
+}
+
+int getText(char *Prompt, int MaxLen, char **Text, int allowEmpty)
+{
+    char *Input;
+    char Format[20];
+    int scanErg;
+    int len;
+
+    if(MaxLen <= 0)
+    {
+        printf("1\n");
+        return 0;
+    }
+    if(Text == NULL)
+    {
+        printf("2\n");
+        return 0;
+    }
+    *Text = NULL;
+    Input = calloc(MaxLen+1, sizeof(char));
+
+    if(Input)
+    {
+        sprintf(Format, "%%%i[^\n]", MaxLen);
+
+        do
+        {
+            printf("%s: ", Prompt);
+            scanErg = scanf((Format, Input));
+            clearBuffer();
+            len = strlen(Input);
+
+            if(len > 0)
+            {
+                *Text = malloc((len+1)*sizeof(char));
+                if(Text)
+                    strcpy(*Text, Input);
+                else
+                {
+                    free(Input);
+                    printf("3\n");
+                    return 0;
+                }
+            }
+            else
+            {
+                if(allowEmpty)
+                {
+                    free(Input);
+                    return 1;
+                }
+                else
+                    scanErg = 0;
+            }
+        } while(scanErg==0);
+        free(Input);
+        return 1;
+    }
 }

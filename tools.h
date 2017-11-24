@@ -8,7 +8,7 @@ int askYesorNo(char[]);
 void clearBuffer(void);
 void printline(char,int);
 void WaitForEnter(void);
-int getText(char[],int,int,char**);
+int getText(char*, int , char **, int );
 int getNumber(char[],int,int*, int, int);
 //getText("Name: ", 50, 0, &((Teams + TeamCounter)->Name));
 
